@@ -51,3 +51,6 @@ memory-bank/
 /scripts
 /scripts/find_pooler.py
 /scripts/probe_pooler.py
+/fly-deploy.ps1
+/pooler-results.txt
+/migrate-output.txt
