@@ -1,0 +1,18 @@
+{% load static %}
+<!doctype html>
+<html lang="en" data-theme="pycord" class="h-full">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}PyCord{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/pycord.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body class="h-full font-sans antialiased">
+  {% block body %}{% endblock %}
+  {% block scripts %}{% endblock %}
+</body>
+
+</html>

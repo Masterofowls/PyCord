@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.Python
+.venv/
+venv/
+env/
+
+# Django
+*.sqlite3
+db.sqlite3
+/staticfiles/
+/media/
+/static/css/pycord.css
+
+# Tailwind binary
+.tailwind/
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Tests / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Memory bank — never commit
+memory-bank/
+.copilot/
+/.env
+/node_modules
+/.venv
+/pycord/__pycache__
+/pycord/apps/__pycache__
+/pycord/apps/accounts/__pycache__
+/daphne.log
+/deploy.log
+/scripts
+/scripts/find_pooler.py
+/scripts/probe_pooler.py

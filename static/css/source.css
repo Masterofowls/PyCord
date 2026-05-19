@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .pc-rail-icon {
+    @apply w-12 h-12 grid place-items-center rounded-3xl bg-discord-sidebar
+           hover:bg-discord-accent hover:rounded-2xl transition-all duration-200
+           text-discord-text cursor-pointer;
+  }
+  .pc-channel-item {
+    @apply flex items-center gap-2 px-2 py-1.5 rounded text-discord-muted
+           hover:bg-discord-channel hover:text-discord-text cursor-pointer;
+  }
+  .pc-channel-item.is-active {
+    @apply bg-discord-channel text-discord-text;
+  }
+  .pc-message {
+    @apply flex gap-3 px-4 py-1 hover:bg-black/10;
+  }
+  .pc-avatar {
+    @apply w-10 h-10 rounded-full bg-discord-accent grid place-items-center
+           text-sm font-semibold shrink-0;
+  }
+}
+
+html, body { height: 100%; }
+body {
+  background: theme('colors.discord.bg');
+  color: theme('colors.discord.text');
+}

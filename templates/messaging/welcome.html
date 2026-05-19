@@ -1,0 +1,13 @@
+{% extends 'app_shell.html' %}
+{% block title %}Welcome — PyCord{% endblock %}
+{% block app_main %}
+<div class="flex-1 grid place-items-center text-center px-6">
+  <div class="max-w-md space-y-4">
+    <h2 class="text-3xl font-bold">Welcome to PyCord</h2>
+    <p class="text-discord-muted">
+      You aren’t in any servers yet. Create your first one to start chatting.
+    </p>
+    <a href="{% url 'servers:create' %}" class="btn btn-primary">Create a server</a>
+  </div>
+</div>
+{% endblock %}

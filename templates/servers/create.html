@@ -1,0 +1,28 @@
+{% extends 'app_shell.html' %}
+{% block title %}Create a server · PyCord{% endblock %}
+{% block app_main %}
+<div class="flex-1 grid place-items-center px-6">
+  <form method="post" class="card w-full max-w-md bg-discord-sidebar shadow-xl">
+    {% csrf_token %}
+    <div class="card-body space-y-3">
+      <h2 class="card-title">Create your server</h2>
+      <p class="text-sm text-discord-muted">
+        Give it a name — your friends or community will know it by this.
+      </p>
+      <label class="form-control w-full">
+        <span class="label-text">Server name</span>
+        <input name="name" required maxlength="100" class="input input-bordered bg-discord-input w-full"
+          placeholder="My awesome server">
+      </label>
+      <label class="cursor-pointer label justify-start gap-3">
+        <input type="checkbox" name="is_public" class="checkbox checkbox-primary">
+        <span class="label-text">Public — anyone with the link can join</span>
+      </label>
+      <div class="card-actions justify-end pt-2">
+        <a href="{% url 'messaging:home' %}" class="btn btn-ghost">Cancel</a>
+        <button class="btn btn-primary" type="submit">Create</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

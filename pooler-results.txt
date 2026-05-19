@@ -1,0 +1,13 @@
+  aws-0-us-east-1.pooler.supabase.com: connection failed: connection to server at "44.216.29.125", port 6543 failed: FATAL:  Tenant or user not found
+  aws-1-us-east-1.pooler.supabase.com: connection failed: connection to server at "18.213.155.45", port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.x
+  aws-0-us-east-2.pooler.supabase.com: connection failed: connection to server at "13.59.95.192", port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.xo
+  aws-1-us-east-2.pooler.supabase.com: connection failed: connection to server at "3.131.201.192", port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.x
+  aws-0-us-west-1.pooler.supabase.com: connection failed: connection to server at "52.8.172.168", port 6543 failed: FATAL:  Tenant or user not found
+  aws-1-us-west-1.pooler.supabase.com: connection failed: connection to server at "3.101.5.153", port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.xoc
+  aws-0-us-west-2.pooler.supabase.com: connection failed: connection to server at "54.70.143.232", port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.x
+  aws-1-us-west-2.pooler.supabase.com: connection failed: connection to server at "44.252.246.120", port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.
+  aws-0-eu-central-1.pooler.supabase.com: connection failed: connection to server at "18.198.30.239", port 6543 failed: FATAL:  Tenant or user not found
+  aws-1-eu-central-1.pooler.supabase.com: connection failed: connection to server at "3.65.151.229", port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.xo
+  aws-0-eu-central-2.pooler.supabase.com: connection failed: connection to server at "51.96.34.188", port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.xo
+  aws-1-eu-central-2.pooler.supabase.com: connection failed: connection to server at "16.63.37.107", port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.xo
+SUCCESS: aws-0-eu-west-1.pooler.supabase.com  ->  ('postgres', IPv6Address('2a05:d018:10e0:3302:8340:d281:6030:cac9'))

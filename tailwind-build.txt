@@ -1,0 +1,14 @@
+Tailwind CSS CLI already exists at 'C:\Users\mrdan\.local\bin\tailwindcss-windows-x64-3.4.17.exe'
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+Rebuilding...
+
+🌼   [35mdaisyUI[39m [2m4.12.10[22m
+├─ [32m✔︎[39m 2 themes added[2m		https://daisyui.com/docs/themes[22m
+╰─ [32m★[39m [0mStar daisyUI on GitHub[0m	[2mhttps://github.com/saadeghi/daisyui[22m
+
+
+Done in 456ms.
+Built production stylesheet 'C:\Users\mrdan\PyCord\static\css\pycord.css'.

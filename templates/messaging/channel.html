@@ -1,0 +1,121 @@
+{% extends 'app_shell.html' %}
+{% block title %}#{{ channel.name }} — {{ server.name }} · PyCord{% endblock %}
+
+{% block app_main %}
+<header class="h-12 px-4 flex items-center gap-2 border-b border-black/30 shadow shrink-0">
+  <span class="text-discord-muted text-xl">#</span>
+  <h1 class="font-semibold">{{ channel.name }}</h1>
+  {% if channel.topic %}
+  <span class="text-discord-muted text-sm border-l border-discord-channel pl-3 ml-2 truncate">
+    {{ channel.topic }}
+  </span>
+  {% endif %}
+</header>
+
+<div id="message-list" class="flex-1 overflow-y-auto py-4 space-y-0.5">
+  {% for m in messages_qs %}
+  <div class="pc-message" data-puid="{{ m.puid }}">
+    <div class="pc-avatar" style="background: {{ m.author.accent_color }}">
+      {{ m.author.username|slice:":1"|upper }}
+    </div>
+    <div class="min-w-0">
+      <div class="flex items-baseline gap-2">
+        <span class="font-semibold">{{ m.author.display_name|default:m.author.username }}</span>
+        <span class="text-xs text-discord-muted">{{ m.created_at|date:'M j, Y H:i' }}</span>
+      </div>
+      <div class="whitespace-pre-wrap break-words">{{ m.content }}</div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="px-6 py-10 text-center text-discord-muted">
+    No messages yet — be the first to say hi 👋
+  </div>
+  {% endfor %}
+</div>
+
+<div id="typing" class="px-6 h-5 text-xs text-discord-muted"></div>
+
+<form id="composer" class="px-4 pb-4 shrink-0" autocomplete="off">
+  <div class="bg-discord-input rounded-lg px-4 py-3 flex items-center gap-2">
+    <input id="composer-input"
+      class="flex-1 bg-transparent outline-none text-discord-text placeholder:text-discord-muted"
+      placeholder="Message #{{ channel.name }}" maxlength="2000" required>
+    <button class="btn btn-primary btn-sm" type="submit">Send</button>
+  </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (function () {
+    const channelPuid = "{{ channel.puid }}";
+    const username = "{{ user.username|escapejs }}";
+    const accent = "{{ user.accent_color|default:'#5865F2'|escapejs }}";
+    const wsScheme = location.protocol === 'https:' ? 'wss' : 'ws';
+    const ws = new WebSocket(`${wsScheme}://${location.host}/ws/channel/${channelPuid}/`);
+
+    const list = document.getElementById('message-list');
+    const form = document.getElementById('composer');
+    const input = document.getElementById('composer-input');
+    const typingEl = document.getElementById('typing');
+    let typingTimer;
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    function renderMessage(m) {
+      const wrap = document.createElement('div');
+      wrap.className = 'pc-message';
+      wrap.dataset.puid = m.puid;
+      const initial = (m.author_display || m.author_username || '?')[0].toUpperCase();
+      const when = new Date(m.created_at).toLocaleString();
+      wrap.innerHTML = `
+      <div class="pc-avatar" style="background:${escapeHtml(accent)}">${escapeHtml(initial)}</div>
+      <div class="min-w-0">
+        <div class="flex items-baseline gap-2">
+          <span class="font-semibold">${escapeHtml(m.author_display || m.author_username)}</span>
+          <span class="text-xs text-discord-muted">${escapeHtml(when)}</span>
+        </div>
+        <div class="whitespace-pre-wrap break-words">${escapeHtml(m.content)}</div>
+      </div>`;
+      list.appendChild(wrap);
+      list.scrollTop = list.scrollHeight;
+    }
+
+    ws.addEventListener('open', () => { list.scrollTop = list.scrollHeight; });
+    ws.addEventListener('message', ev => {
+      const data = JSON.parse(ev.data);
+      if (data.event === 'message.created' && data.message) {
+        if (!list.querySelector(`[data-puid="${data.message.puid}"]`)) renderMessage(data.message);
+      } else if (data.event === 'typing' && data.username !== username) {
+        typingEl.textContent = `${data.username} is typing…`;
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => { typingEl.textContent = ''; }, 2500);
+      }
+    });
+    ws.addEventListener('close', () => { typingEl.textContent = 'disconnected — refresh to reconnect'; });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text || ws.readyState !== WebSocket.OPEN) return;
+      ws.send(JSON.stringify({ action: 'send', content: text }));
+      input.value = '';
+    });
+
+    let lastTypingSent = 0;
+    input.addEventListener('input', () => {
+      const now = Date.now();
+      if (ws.readyState === WebSocket.OPEN && now - lastTypingSent > 2000) {
+        ws.send(JSON.stringify({ action: 'typing' }));
+        lastTypingSent = now;
+      }
+    });
+
+    list.scrollTop = list.scrollHeight;
+  })();
+</script>
+{% endblock %}
